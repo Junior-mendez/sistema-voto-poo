@@ -7,6 +7,7 @@ import claseHijos.Candidato;
 import claseHijos.CandidatoArray;
 import claseHijos.Partido;
 import claseHijos.PartidoArray;
+import clasePadre.Data;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -65,6 +66,85 @@ public class DatosPartido extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
+	public boolean agregar=false;
+	public DatosPartido(boolean a){
+		agregar=a;
+		setBackground(Color.BLACK);
+		setTitle("PARTIDO\r\n");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 488, 431);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setForeground(new Color(0, 0, 0));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
+		
+		lblNombre = new JLabel("NOMBRE:");
+		lblNombre.setForeground(Color.BLACK);
+		lblNombre.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		lblNombre.setBounds(12, 13, 65, 22);
+		contentPane.add(lblNombre);
+		
+		lblSiglas = new JLabel("SIGLAS:");
+		lblSiglas.setForeground(Color.BLACK);
+		lblSiglas.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		lblSiglas.setBounds(12, 48, 65, 22);
+		contentPane.add(lblSiglas);
+		
+		txtNomPartido = new JTextField();
+		txtNomPartido.setBounds(87, 14, 240, 22);
+		contentPane.add(txtNomPartido);
+		txtNomPartido.setColumns(10);
+		
+		txtSglPartido = new JTextField();
+		txtSglPartido.setColumns(10);
+		txtSglPartido.setBounds(87, 48, 146, 22);
+		contentPane.add(txtSglPartido);
+		
+		btnRegistrarPartido = new JButton("REGISTRAR");
+		btnRegistrarPartido.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		btnRegistrarPartido.addActionListener(this);
+		btnRegistrarPartido.setBounds(10, 182, 235, 49);
+		contentPane.add(btnRegistrarPartido);
+		btnRegistrarPartido.setIcon(new ImageIcon(img_registrar));
+		
+		label = new JLabel("");
+		label.setIcon(new ImageIcon(img_logo));
+		label.setBounds(233, 48, 196, 123);
+		contentPane.add(label);
+		
+		btnRegresar = new JButton(" ");
+		btnRegresar.addActionListener(this);
+		btnRegresar.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		btnRegresar.setBounds(10, 343, 54, 49);
+		contentPane.add(btnRegresar);
+		btnRegresar.setIcon(new ImageIcon(img_regresar));
+		btnRegresar.setVisible(!a);
+		
+		btnSalir = new JButton(" ");
+		btnSalir.addActionListener(this);
+		btnSalir.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		btnSalir.setBounds(408, 343, 54, 49);
+		contentPane.add(btnSalir);
+		btnSalir.setIcon(new ImageIcon(img_salir));
+		btnSalir.setVisible(!a);
+		
+		btnSubir = new JButton("Subir");
+		btnSubir.setVisible(true);
+		btnSubir.addActionListener(this);
+		btnSubir.setBounds(12, 102, 71, 23);
+		contentPane.add(btnSubir);
+		
+		lblFoto = new JLabel("");
+		lblFoto.setBounds(87, 81, 146, 74);
+		contentPane.add(lblFoto);
+		
+		label_1 = new JLabel("");
+		label_1.setBounds(53, 257, 221, 37);
+		contentPane.add(label_1);
+	}
 	public DatosPartido() {
 		setBackground(Color.BLACK);
 		setTitle("PARTIDO\r\n");
@@ -157,7 +237,7 @@ public class DatosPartido extends JFrame implements ActionListener {
 		}
 	}
 	
-	PartidoArray partA=new PartidoArray();
+//	static PartidoArray partA=Data.create().partA;
 	private JLabel label;
 	private JButton btnRegresar;
 	private JButton btnSalir;
@@ -174,12 +254,15 @@ public class DatosPartido extends JFrame implements ActionListener {
 		}
 		else{
 			try{
-				Partido b1=partA.buscar(ObtenerSiglas());
+				Partido b1=Data.create().partA.buscar(ObtenerSiglas());
 				if(b1==null){
 					Partido part=new Partido(ObtenerNombre(),ObtenerSiglas(),des);
-					partA.Adicionar(part);
+					Data.create().partA.Adicionar(part);
 					mensaje("Partido Registrado");
 					label_1.setText(des);
+					if (agregar==true){
+						this.dispose();
+					}
 				}
 				else{
 					mensaje ("Siglas ya existentes");

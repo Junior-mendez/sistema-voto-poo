@@ -13,6 +13,7 @@ import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 import claseHijos.Votante;
 import claseHijos.VotanteArray;
 import claseHijos.VotoArray;
+import clasePadre.Data;
 import sun.security.util.Length;
 
 import javax.swing.JLabel;
@@ -247,8 +248,8 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 		}
 	}
 	
-	VotanteArray vtnteA=new VotanteArray();
-	VotoArray votoA=new VotoArray();
+//	VotanteArray vtnteA=new VotanteArray();
+//	VotoArray votoA=new VotoArray();
 	
 	private JLabel lblNumeroCertificado;
 	private JTextArea txtNumCertificado;
@@ -272,7 +273,7 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 			if (Integer.toString(dni).length()!=8){
 				mensaje("Ingrese un DNI Válido");
 			}
-			else if (vtnteA.buscar(dni)==null){
+			else if (Data.create().vtnA.buscar(dni)==null){
 				try {
 					String nom=ObtenerNombre();
 					if(nom.length()<=0){
@@ -298,10 +299,10 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 										try{
 											int cert=ObtenerCertificado();
 											Votante v=new Votante(dni, nom, ape, edad, sex, usua, clave);
-											Votante ve=vtnteA.buscar(ObtenerDNI());
+											Votante ve=Data.create().vtnA.buscar(ObtenerDNI());
 											if(ve==null){
 												if(edad>=18){
-													vtnteA.Adicionar(v);
+													Data.create().vtnA.Adicionar(v);
 													mensaje("VOTANTE REGISTRADO CON ÉXITO");
 													Limpiar();
 												}else{
@@ -359,8 +360,8 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 	
 	void Listado(){
 		modelo.setRowCount(0);
-		for(int i=0;i<vtnteA.tamaño();i++){
-			Object[] registro={vtnteA.Obtener(i).getDni(),vtnteA.Obtener(i).getNombre(),vtnteA.Obtener(i).getApellido(),vtnteA.Obtener(i).getUsuario_votante()};	
+		for(int i=0;i<Data.create().vtnA.tamaño();i++){
+			Object[] registro={Data.create().vtnA.Obtener(i).getDni(),Data.create().vtnA.Obtener(i).getNombre(),Data.create().vtnA.Obtener(i).getApellido(),Data.create().vtnA.Obtener(i).getUsuario_votante()};	
 			modelo.addRow(registro);
 		}
 
@@ -406,7 +407,7 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 	}
 	public void Buscar(){
 		try{
-			Votante v=vtnteA.buscar(ObtenerDNI());
+			Votante v=Data.create().vtnA.buscar(ObtenerDNI());
 			if(v!=	null){
 				ListadoBuscar(v);
 				mensaje("USUARIO ENCONTRADO");
@@ -440,7 +441,7 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 	}
 	public void Editar(){
 		try{
-			Votante v=vtnteA.buscar(ObtenerDNI());
+			Votante v=Data.create().vtnA.buscar(ObtenerDNI());
 			
 			String nombre=ObtenerNombre();
 			String apelli=ObtenerApellido();
@@ -477,9 +478,9 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 	}
 	public void Eliminar(){
 		try{
-			Votante v=vtnteA.buscar(ObtenerDNI());
+			Votante v=Data.create().vtnA.buscar(ObtenerDNI());
 			if(v!=null){
-				vtnteA.eliminar(v);
+				Data.create().vtnA.eliminar(v);
 				Listado();
 				Limpiar();
 				mensaje("USUARIO ELIMINADO");

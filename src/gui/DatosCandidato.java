@@ -9,6 +9,7 @@ import claseHijos.CandidatoArray;
 import claseHijos.Partido;
 import claseHijos.PartidoArray;
 import claseHijos.Votante;
+import clasePadre.Data;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,14 +38,17 @@ import java.awt.Image;
 import java.awt.event.ContainerListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.MouseEvent;
 
-public class DatosCandidato extends JFrame implements ActionListener{
+public class DatosCandidato extends JFrame implements ActionListener, MouseListener{
 	private Image img_buscar= new ImageIcon(FormLogin.class.getResource("/resources/buscar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	private Image img_registrar= new ImageIcon(FormLogin.class.getResource("/resources/registrar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	private Image img_borrar= new ImageIcon(FormLogin.class.getResource("/resources/borrar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	private Image img_editar= new ImageIcon(FormLogin.class.getResource("/resources/editar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	private Image img_menu= new ImageIcon(FormLogin.class.getResource("/resources/menu.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	private Image img_agregar= new ImageIcon(FormLogin.class.getResource("/resources/add.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	
 	private JPanel contentPane;
 	private JLabel lblCdigo;
@@ -225,9 +229,10 @@ public class DatosCandidato extends JFrame implements ActionListener{
 		contentPane.add(btnSubir);
 		
 		comboPartido = new JComboBox();
+		comboPartido.addMouseListener(this);
 		comboPartido.addActionListener(this);
 		comboPartido.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		comboPartido.setBounds(120, 236, 159, 22);
+		comboPartido.setBounds(120, 236, 151, 22);
 		AgregarCombo(comboPartido);
 		contentPane.add(comboPartido);
 		
@@ -237,16 +242,25 @@ public class DatosCandidato extends JFrame implements ActionListener{
 		lblPartido.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		lblPartido.setBounds(12, 234, 77, 27);
 		contentPane.add(lblPartido);
+		
+		btnAgregar = new JButton("");
+		btnAgregar.addActionListener(this);
+		btnAgregar.setBounds(281, 235, 23, 27);
+		contentPane.add(btnAgregar);
+		btnAgregar.setIcon(new ImageIcon(img_agregar));
 	}
-	PartidoArray part = new PartidoArray();
+//	PartidoArray part = new PartidoArray();
 	Partido partido = new Partido();
 	public void AgregarCombo(JComboBox combo){
-		String[] prueba = new String[part.tamaño()];
-		for (int  i=0;i< part.tamaño();i++){
-			combo.addItem(part.Obtener(i).getNom_part()) ;
+		combo.removeAllItems();;
+		for (int  i=0;i< Data.create().partA.tamaño();i++){
+			combo.addItem(Data.create().partA.Obtener(i).getNom_part()) ;
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAgregar) {
+			do_btnAgregar_actionPerformed(e);
+		}
 		if (e.getSource() == btnSubir) {
 			do_btnSubir_actionPerformed(e);
 		}
@@ -267,7 +281,7 @@ public class DatosCandidato extends JFrame implements ActionListener{
 		}
 	}
 	
-	static CandidatoArray candA=new CandidatoArray();
+//	static CandidatoArray candA=Data.create().candA;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton btnModificar;
@@ -295,7 +309,7 @@ public class DatosCandidato extends JFrame implements ActionListener{
 			if (Integer.toString(dni).length()!=8){
 				mensaje("Ingrese un DNI Válido");
 			}
-			else if (candA.buscar(dni)==null){
+			else if (Data.create().candA.buscar(dni)==null){
 				try {
 					String nom=ObtenerNombre();
 					if(nom.length()<=0){
@@ -310,12 +324,18 @@ public class DatosCandidato extends JFrame implements ActionListener{
 							else{
 							try{
 								int edad=ObtenerEdad();
-								try{	Partido partido=ObtenerPartido();					
-											Candidato c=new Candidato(cod, dni, nom, ape, edad, sex, partido);
-											Candidato ca=candA.buscar(ObtenerDNI());
+								try{	Partido partido=ObtenerPartido();	
+										String foto=des;
+											Candidato c=new Candidato(cod, dni, nom, ape, edad, sex, partido,foto);
+											Candidato ca=Data.create().candA.buscar(ObtenerDNI());
 											if(ca==null){
 												if(edad>=35){
-													candA.Adicionar(c);
+													if (validar()==false){
+														mensaje("Partido ya tiene candidato");
+														return;
+													}
+													Data.create().candA.Adicionar(c);
+													lblFoto.setIcon(null);
 													mensaje("CANDIDATO REGISTRADO CON ÉXITO");
 													Limpiar();
 												}else{
@@ -349,7 +369,7 @@ public class DatosCandidato extends JFrame implements ActionListener{
 					mensaje("Ingrese el Nombre correcto");
 				}
 			}
-			else {
+		else {
 				mensaje("El Usuario ya existe");
 			}
 		}
@@ -374,8 +394,8 @@ public class DatosCandidato extends JFrame implements ActionListener{
 	}
 	void Listado(){
 		modelo.setRowCount(0);
-		for(int i=0;i<candA.tamaño();i++){
-			Object[] registro={candA.Obtener(i).getCódigo_candidato(),candA.Obtener(i).getDni(),candA.Obtener(i).getNombre(),candA.Obtener(i).getApellido(),candA.Obtener(i).getEdad(),candA.Obtener(i).getPartido().getNom_part()};	
+		for(int i=0;i<Data.create().candA.tamaño();i++){
+			Object[] registro={Data.create().candA.Obtener(i).getCódigo_candidato(),Data.create().candA.Obtener(i).getDni(),Data.create().candA.Obtener(i).getNombre(),Data.create().candA.Obtener(i).getApellido(),Data.create().candA.Obtener(i).getEdad(),Data.create().candA.Obtener(i).getPartido().getNom_part()};	
 			modelo.addRow(registro);
 		}
 
@@ -406,14 +426,14 @@ public class DatosCandidato extends JFrame implements ActionListener{
 	}
 	Partido ObtenerPartido(){
 		String nombre =comboPartido.getSelectedItem().toString();
-		return part.buscarNom(nombre);
+		return Data.create().partA.buscarNom(nombre);
 	}
 	protected void do_btnB_actionPerformed(ActionEvent e) {
 		Buscar();
 	}
 	public void Buscar(){
 		try{
-			Candidato c=candA.buscar(ObtenerCodigo());
+			Candidato c=Data.create().candA.buscar(ObtenerCodigo());
 			if(c!=	null){
 				ListadoBuscar(c);
 				mensaje("USUARIO ENCONTRADO");
@@ -443,7 +463,7 @@ public class DatosCandidato extends JFrame implements ActionListener{
 	}
 	public void Editar(){
 		try{
-			Candidato c=candA.buscar(ObtenerCodigo());
+			Candidato c=Data.create().candA.buscar(ObtenerCodigo());
 			int dni=ObtenerDNI();
 			String nombre=ObtenerNombre();
 			String apelli=ObtenerApellido();
@@ -471,9 +491,9 @@ public class DatosCandidato extends JFrame implements ActionListener{
 	}
 	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
 		try{
-			Candidato c=candA.buscar(ObtenerCodigo());
+			Candidato c=Data.create().candA.buscar(ObtenerCodigo());
 			if(c!=null){
-				candA.eliminar(c);
+				Data.create().candA.eliminar(c);
 				Listado();
 				Limpiar();
 				mensaje("CANDIDATO ELIMINADO");
@@ -498,6 +518,8 @@ public class DatosCandidato extends JFrame implements ActionListener{
 	protected void do_btnSubir_actionPerformed(ActionEvent e) {
 		cargarImagen();
 	}
+	String des="";
+	private JButton btnAgregar;
 	public void cargarImagen(){
 		JFileChooser fc = new JFileChooser();
 		FileNameExtensionFilter filtro =new FileNameExtensionFilter("JPG","jpg","png");
@@ -509,7 +531,7 @@ public class DatosCandidato extends JFrame implements ActionListener{
 				ImageIcon icon=new ImageIcon(archivo.toString());
 				Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
 				lblFoto.setIcon(icono);
-				String des = System.getProperty("user.dir")+"/src/resources/"+archivo.getName();
+				 des = System.getProperty("user.dir")+"/src/resources/"+archivo.getName();
 				Path destino = Paths.get(des);
 				String orig = archivo.getPath();
 				Path origen = Paths.get(orig);
@@ -523,14 +545,35 @@ public class DatosCandidato extends JFrame implements ActionListener{
 			}
 //		mensaje("Cancelo la operación");
 	}
+	boolean validar(){
+		for(int i=0;i<Data.create().candA.tamaño();i++){
+			if (ObtenerPartido().getSigla()==Data.create().candA.Obtener(i).getPartido().getSigla()){
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
+		DatosPartido partido=new DatosPartido(true);
+		partido.setVisible(true);
 
-	public void mouseEntered(MouseEvent arg0) {
 	}
-	public void mouseExited(MouseEvent arg0) {
+	
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == comboPartido) {
+			do_comboPartido_mouseClicked(e);
+		}
 	}
-	public void mousePressed(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 	}
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 	}
-
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	protected void do_comboPartido_mouseClicked(MouseEvent e) {
+		 AgregarCombo(comboPartido);
+	}
 }

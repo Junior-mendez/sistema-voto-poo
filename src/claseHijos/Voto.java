@@ -1,7 +1,7 @@
 package claseHijos;
 
 public class Voto {
-	private String certificado,departamentoV;
+	private String certificado;
 	private int fecha,periodo_elección;
 	private Candidato candidato_Voto;
 	private Partido partido_Voto;
@@ -19,12 +19,7 @@ public class Voto {
 	public void setCertificado(String certificado) {
 		this.certificado = certificado;
 	}
-	public String getDepartamentoV() {
-		return departamentoV;
-	}
-	public void setDepartamento(String departamentoV) {
-		this.departamentoV = departamentoV;
-	}
+
 	public int getFecha() {
 		return fecha;
 	}

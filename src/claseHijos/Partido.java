@@ -1,6 +1,5 @@
 package claseHijos;
 
-import java.io.File;
 
 public class Partido {
 	private String nom_part;
