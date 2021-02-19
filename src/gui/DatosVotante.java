@@ -318,17 +318,17 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 											}
 										}
 										catch(Exception e){
-											mensaje("Ingrese el Certificado Correcto");
+											mensaje("Ingrese Certificado correcto");
 										}
 										
 									}
 									catch(Exception e){
-										mensaje("Ingrese el Usuario Correcta");
+										mensaje("Ingrese contraseña Correcta");
 									}
 									}
 								}
 								catch(Exception e){
-									mensaje("Ingrese la Edad Correcta");
+									mensaje("Ingrese usuario Correcto");
 								}
 								
 							}
@@ -339,7 +339,7 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 						}
 						
 						catch(Exception e){
-							mensaje("Ingrese el Apelliso correcto");
+							mensaje("Ingrese el Apellido correcto");
 						}
 					}				
 				}

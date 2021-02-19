@@ -169,7 +169,7 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 		
 		comboBox = new JComboBox();
 		comboBox.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino", "Otro"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"-SELECCIONAR-", "MASCULINO", "FEMENINO", "OTRO"}));
 		comboBox.setBounds(120, 202, 159, 22);
 		contentPane.add(comboBox);
 		
@@ -350,7 +350,7 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 										
 									}
 								catch(Exception e){
-									mensaje("Ingrese la Edad Correcta");
+									mensaje("Ingrese la partido valido");
 								}
 								
 							}

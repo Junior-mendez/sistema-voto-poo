@@ -55,13 +55,4 @@ public class CandidatoArray {
 		candidatoA.set(i,x);
 	}
 	
-	public int ContarDigitos(Candidato x){
-		int código=x.getCódigo_candidato(); 
-	            int cifras= 0;
-	            while(código!=0){        
-	            	código = código/10;     
-	                cifras++;         
-	            }
-		return cifras;
-	}
 }
