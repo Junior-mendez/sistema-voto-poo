@@ -12,6 +12,12 @@ public class Voto {
 		this.fecha = fecha;
 		this.periodo_elección = periodo_elección;
 	}
+	public Voto(String certificado, Candidato candidato_Voto,
+			 Partido partido_Voto) {
+		this.certificado = certificado;
+		this.candidato_Voto = candidato_Voto;
+		this.partido_Voto = partido_Voto;
+	}
 	
 	public String getCertificado() {
 		return certificado;

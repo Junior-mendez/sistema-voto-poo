@@ -39,7 +39,9 @@ public class PartidoArray {
 		Partido x;
 		for (int i=0; i<tamaño(); i++){
 			x=Obtener(i);
-			if(x.getNom_part().equals(nomb))	return x;
+			if(x.getNom_part().equals(nomb))	{
+				return x;
+			}
 		}	
 		return null;
 	}

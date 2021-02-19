@@ -184,6 +184,7 @@ public class DatosVoto extends JFrame implements ActionListener{
 		labelCertificado.setText(Data.create().certi);
 		
 		btnSalir = new JButton("");
+		btnSalir.addActionListener(this);
 		btnSalir.setBounds(359, 392, 59, 55);
 		contentPane.add(btnSalir);
 		btnSalir.setIcon(new ImageIcon(img_salir));
@@ -196,8 +197,10 @@ public class DatosVoto extends JFrame implements ActionListener{
 //	CandidatoArray cand = new CandidatoArray();
 //	PartidoArray par = new PartidoArray();
 	
-	Partido part;
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnSalir) {
+			do_btnSalir_actionPerformed(e);
+		}
 		if (e.getSource() == btnRealizarVoto) {
 			do_btnRealizarVoto_actionPerformed(e);
 		}
@@ -222,24 +225,27 @@ public class DatosVoto extends JFrame implements ActionListener{
 	private JLabel lblLogo;
 	
 	protected void do_btnRealizarVoto_actionPerformed(ActionEvent arg0) {
-		try{
-			Voto b1=Data.create().votoA.buscar(Data.create().certi);
-			if(b1==null){
-				
-				Voto b2=new Voto(Data.create().certi,ObtenerFecha(),ObtenerPeriodo());
-				Data.create().votoA.Adicionar(b2);
-				mensaje("Su voto fue realizado");
-				this.dispose();
-				FormInicio form = new FormInicio();
-				form.setVisible(true);
+		Registrar();
+	}
+	
+	public void Registrar(){
+			try{
+					if(labelCandidato.getText().length()<=0){
+						mensaje("Por favor escoja un Partido");
+					}
+					else{
+						Voto b2=new Voto(Data.create().certi,Data.candA.buscar(comboBoxPartido.getSelectedItem().toString()),Data.partA.buscarNom(comboBoxPartido.getSelectedItem().toString()));
+						Data.create().votoA.Adicionar(b2);
+						mensaje("Su voto fue realizado");
+						this.dispose();
+						FormInicio form = new FormInicio();
+						form.setVisible(true);
+					}
 			}
-			else{
-				mensaje("El número de certificado ya se encuentra registrado");
+			catch(Exception e){
+				mensaje("Hay un error en su Voto");
 			}
-		}
-		catch(Exception e){
-			mensaje("Ingrese número de certifcado correcto");
-		}
+			
 	}
 	
 	public void mensaje(String s){
@@ -261,6 +267,7 @@ public class DatosVoto extends JFrame implements ActionListener{
 	}
 	public void mouseReleased(MouseEvent arg0) {
 	}
+
 	public void CambioCombo(){
 		Partido partido = Data.create().partA.buscarNom(comboBoxPartido.getSelectedItem().toString());
 		Candidato candidato = Data.create().candA.buscar(partido.getNom_part());
@@ -271,5 +278,8 @@ public class DatosVoto extends JFrame implements ActionListener{
 		ImageIcon img_partido=new ImageIcon(partido.getFoto());
 		Icon im_partido = new ImageIcon(img_partido.getImage().getScaledInstance(lblFotoCandidato.getWidth(), lblFotoCandidato.getHeight(), Image.SCALE_DEFAULT));
 		lblFotoPartido.setIcon(im_partido);
+	}
+	protected void do_btnSalir_actionPerformed(ActionEvent e) {
+		this.dispose();
 	}
 }
