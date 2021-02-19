@@ -3,6 +3,7 @@ package clasePadre;
 import claseHijos.CandidatoArray;
 import claseHijos.EncargadoArray;
 import claseHijos.PartidoArray;
+import claseHijos.Votante;
 import claseHijos.VotanteArray;
 import claseHijos.VotoArray;
 
@@ -13,6 +14,7 @@ public class Data {
 	public static EncargadoArray encargadoA=new EncargadoArray();
 	public static VotoArray votoA=new VotoArray();
 	public static Data data;
+	public static String certi;
 	
 	public static Data create(){
 		if(data == null){

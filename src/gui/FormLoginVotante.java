@@ -24,6 +24,7 @@ import claseHijos.Encargado;
 import claseHijos.EncargadoArray;
 import claseHijos.Votante;
 import claseHijos.VotanteArray;
+import clasePadre.Data;
 
 import java.awt.Color;
 import javax.swing.JPasswordField;
@@ -302,24 +303,31 @@ public class FormLoginVotante extends JFrame implements MouseListener, FocusList
 		this.setVisible(false);
 	}
 	public void IniciarSesion(){
-		VotanteArray votantes = new VotanteArray();
+//		VotanteArray votantes = new VotanteArray();
+		
 		if  (textUsername.getText().equals("") || textUsername.getText().equals("Username")||
 				textPassword.getText().equals("")||textPassword.getText().equals("Password")){
 			labelError.setText("Ingrese el usuario y contraseÃ±a");
 		}
 		else{
 			try{
-				Votante votante = votantes.buscar(textUsername.getText());
+				Votante votante = Data.create().vtnA.buscar(textUsername.getText());
 				String username = votante.getUsuario_votante();
 				String password = votante.getClave_votante();
 					
 						if(textUsername.getText().equals(username) && textPassword.getText().equals(password)){
-							DatosVoto voto = new DatosVoto();
-							voto.setVisible(true);
-							this.setVisible(false);
+							if(Data.create().votoA.buscar(votante.getCertificado())==null){
+								Data.create().certi=votante.getCertificado();
+								DatosVoto voto = new DatosVoto();
+								voto.setVisible(true);
+								this.setVisible(false);
+							}
+							else{
+								labelError.setText("Usted ya ejercicio su voto");
+							}
 						}
 						else{
-							labelError.setText("ContraseÃ±a Incorrecta");
+							labelError.setText("Contraseña Incorrecta");
 						}
 					}
 					

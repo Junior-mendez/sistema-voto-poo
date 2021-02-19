@@ -150,9 +150,15 @@ public class DatosVoto extends JFrame implements ActionListener{
 		lblPartido_1.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 16));
 		lblPartido_1.setBounds(218, 195, 171, 25);
 		contentPane.add(lblPartido_1);
+		
+		labelCertificado = new JLabel("");
+		labelCertificado.setBounds(190, 364, 148, 43);
+		contentPane.add(labelCertificado);
+		labelCertificado.setText(Data.create().certi);
 	}
 //	CandidatoArray cand = new CandidatoArray();
 //	PartidoArray par = new PartidoArray();
+	
 	Partido part;
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnRealizarVoto) {
@@ -174,12 +180,15 @@ public class DatosVoto extends JFrame implements ActionListener{
 	private JLabel labelCandidato;
 	private JLabel lblCandidatoFoto;
 	private JLabel lblPartido_1;
+	private JLabel labelCertificado;
 	
 	protected void do_btnRealizarVoto_actionPerformed(ActionEvent arg0) {
 		try{
 			Voto b1=Data.create().votoA.buscar(ObtenerCertificado());
 			if(b1==null){
 				Voto b2=new Voto(ObtenerCertificado(),ObtenerFecha(),ObtenerPeriodo());
+				mensaje("Su voto fue realizado");
+				this.dispose();
 			}
 			else{
 				mensaje("El número de certificado ya se encuentra registrado");
@@ -223,5 +232,4 @@ public class DatosVoto extends JFrame implements ActionListener{
 		Icon im_partido = new ImageIcon(img_partido.getImage().getScaledInstance(lblFotoCandidato.getWidth(), lblFotoCandidato.getHeight(), Image.SCALE_DEFAULT));
 		lblFotoPartido.setIcon(im_partido);
 	}
-	
 }

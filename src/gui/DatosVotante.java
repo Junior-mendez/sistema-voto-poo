@@ -297,8 +297,8 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 									try{
 										String clave=ObtenerClave();
 										try{
-											int cert=ObtenerCertificado();
-											Votante v=new Votante(dni, nom, ape, edad, sex, usua, clave);
+											String cert=ObtenerCertificado();
+											Votante v=new Votante(dni, nom, ape, edad, sex,cert, usua, clave);
 											Votante ve=Data.create().vtnA.buscar(ObtenerDNI());
 											if(ve==null){
 												if(edad>=18){
@@ -399,8 +399,8 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 	String ObtenerClave(){
 		return txtClaveVotante.getText();
 	}
-	int ObtenerCertificado(){
-		return Integer.parseInt(txtNumCertificado.getText());
+	String ObtenerCertificado(){
+		return txtNumCertificado.getText();
 	}
 	protected void do_btnBuscar_actionPerformed(ActionEvent arg0) {
 		Buscar();

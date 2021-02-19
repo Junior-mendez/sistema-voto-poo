@@ -7,7 +7,8 @@ public class VotanteArray {
 	
 	public VotanteArray(){
 		votanteA=new ArrayList<Votante>();
-		Adicionar(new Votante(76515667,  "Junior", "Junior", 20,  "M","jota","jota"));
+		Adicionar(new Votante(76515667,  "Junior", "Junior", 20,  "M","certificado","jota","jota"));
+		Adicionar(new Votante(76515667,  "Fabrizio", "Vallejo", 20,  "M","fabrizioCertificado","fabrizio","fabrizio"));
 	}
 	
 	public void Adicionar(Votante x){
