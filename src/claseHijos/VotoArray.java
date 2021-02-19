@@ -25,10 +25,21 @@ public class VotoArray {
 		Voto x;
 		for (int i=0; i<tamaño(); i++){
 			x=Obtener(i);
-		if(x.getCertificado().equals(certificado_Encargado))
+		if(x.getCertificado().equals(certificado_Encargado)){
 			return x;
-	}	
+		}	
+	}
 		return null;
+	}
+	public boolean existe(String certificado_Encargado,int s) {
+		Voto x;
+		for (int i=0; i<tamaño(); i++){
+			x=Obtener(i);
+		if(x.getCertificado().equals(certificado_Encargado)){
+			return false;
+		}	
+	}	
+		return true;
 	}
 	
 	public void eliminar(Voto x) {

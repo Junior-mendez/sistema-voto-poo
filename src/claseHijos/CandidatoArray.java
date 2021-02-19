@@ -8,11 +8,11 @@ public class CandidatoArray {
 	public CandidatoArray() {
 		PartidoArray par =new PartidoArray();
 		candidatoA=new ArrayList<Candidato>();
-		Adicionar(new Candidato(1, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(0),"C://Users//Usuario//Pictures//Carpeta.jpg"));
-		Adicionar(new Candidato(2, 76515667, "Pedro", "Mendez", 25, "M",par.Obtener(1),"C://Users//Usuario//Pictures//navidad.jpg"));
-		Adicionar(new Candidato(3, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(2),"C://Users//Usuario//Pictures//Carpeta.jpg"));
-		Adicionar(new Candidato(4, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(3),"C://Users//Usuario//Pictures//Carpeta.jpg"));
-		Adicionar(new Candidato(5, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(4),"C://Users//Usuario//Pictures//Carpeta.jpg"));
+		Adicionar(new Candidato(1, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(0),"D://Documents//NUEVO PROYECTO FINAL//votoelectronico//src//resources//junior.jpg"));
+		Adicionar(new Candidato(2, 76515667, "Pedro", "Mendez", 25, "M",par.Obtener(1),"D://Documents//NUEVO PROYECTO FINAL//votoelectronico//src//resources//partido.png"));
+		Adicionar(new Candidato(3, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(2),"D://Documents//NUEVO PROYECTO FINAL//votoelectronico//src//resources//junior.jpg"));
+		Adicionar(new Candidato(4, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(3),"D://Documents//NUEVO PROYECTO FINAL//votoelectronico//src//resources//junior.jpg"));
+		Adicionar(new Candidato(5, 76515667, "Junior", "Mendez", 25, "M",par.Obtener(4),"D://Documents//NUEVO PROYECTO FINAL//votoelectronico//src//resources//junior.jpg"));
 	
 	}
 	

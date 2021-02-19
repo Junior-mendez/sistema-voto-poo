@@ -316,7 +316,7 @@ public class FormLoginVotante extends JFrame implements MouseListener, FocusList
 				String password = votante.getClave_votante();
 					
 						if(textUsername.getText().equals(username) && textPassword.getText().equals(password)){
-							if(Data.create().votoA.buscar(votante.getCertificado())==null){
+							if(Data.create().votoA.existe(votante.getCertificado(),1)){
 								Data.create().certi=votante.getCertificado();
 								DatosVoto voto = new DatosVoto();
 								voto.setVisible(true);
