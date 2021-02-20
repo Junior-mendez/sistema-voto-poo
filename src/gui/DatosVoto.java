@@ -225,7 +225,10 @@ public class DatosVoto extends JFrame implements ActionListener{
 	private JLabel lblLogo;
 	
 	protected void do_btnRealizarVoto_actionPerformed(ActionEvent arg0) {
-		Registrar();
+		if (JOptionPane.showConfirmDialog(null, "Desea confirmar el Voto?","Confirmar Voto",JOptionPane.YES_NO_OPTION)==0){
+			Registrar();
+		}
+		
 	}
 	
 	public void Registrar(){
@@ -271,7 +274,7 @@ public class DatosVoto extends JFrame implements ActionListener{
 	public void CambioCombo(){
 		Partido partido = Data.create().partA.buscarNom(comboBoxPartido.getSelectedItem().toString());
 		Candidato candidato = Data.create().candA.buscar(partido.getNom_part());
-		labelCandidato.setText(candidato.getNombre());
+		labelCandidato.setText(candidato.getNombre()+" "+candidato.getApellido());
 		ImageIcon img_candidato=new ImageIcon(candidato.getFoto());
 		Icon im_candidato = new ImageIcon(img_candidato.getImage().getScaledInstance(lblFotoCandidato.getWidth(), lblFotoCandidato.getHeight(), Image.SCALE_DEFAULT));
 		lblFotoCandidato.setIcon(im_candidato);

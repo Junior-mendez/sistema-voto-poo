@@ -38,13 +38,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class FormLoginVotante extends JFrame implements MouseListener, FocusListener, ActionListener {
-
-	private Image img_logo= new ImageIcon(FormLoginVotante.class.getResource("/resources/fondo.jpg")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+	int intentos;
+	private Image img_fondoonpe= new ImageIcon(FormLoginVotante.class.getResource("/resources/fondoonpe.jpg")).getImage().getScaledInstance(190, 190, Image.SCALE_SMOOTH);
 	private Image img_username= new ImageIcon(FormLoginVotante.class.getResource("/resources/username.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	private Image img_password= new ImageIcon(FormLoginVotante.class.getResource("/resources/password.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	private Image img_login= new ImageIcon(FormLoginVotante.class.getResource("/resources/login.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-	private Image img_salir= new ImageIcon(FormLoginVotante.class.getResource("/resources/exit.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-	private Image img_regresar= new ImageIcon(FormLoginVotante.class.getResource("/resources/regresar.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+	private Image img_logout= new ImageIcon(FormLoginVotante.class.getResource("/resources/logout.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+	private Image img_volver= new ImageIcon(FormLoginVotante.class.getResource("/resources/volver.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 	
 	private JPanel contentPane;
 	private JPanel panel;
@@ -160,7 +160,15 @@ public class FormLoginVotante extends JFrame implements MouseListener, FocusList
 		        }
 		        public void keyPressed(KeyEvent e) {
 		            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-		                IniciarSesion(); //MÃ©todo que tienes que crearte
+		            	if(intentos==2){
+		        			JOptionPane.showMessageDialog(FormLoginVotante.this, "Acceso Denegado");
+		        			FormLoginVotante.this.dispose();
+		        			
+		        		}
+		        		else{
+		        			IniciarSesion();
+		        			intentos=intentos+1;
+		        		};
 		            }
 		        }
 		        public void keyReleased(KeyEvent e) {
@@ -176,9 +184,9 @@ public class FormLoginVotante extends JFrame implements MouseListener, FocusList
 		
 		lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogo.setBounds(86, 24, 226, 108);
+		lblLogo.setBounds(86, 11, 218, 150);
 		contentPane.add(lblLogo);
-		lblLogo.setIcon(new ImageIcon(img_logo));
+		lblLogo.setIcon(new ImageIcon(img_fondoonpe));
 		
 		panel_3 = new JPanel();
 		panel_3.addMouseListener(this);
@@ -200,16 +208,20 @@ public class FormLoginVotante extends JFrame implements MouseListener, FocusList
 		lblIconLogin.setIcon(new ImageIcon(img_login));
 		
 		buttonSalir = new JButton("");
+		buttonSalir.setBackground(Color.WHITE);
+		buttonSalir.setBorderPainted(false);
 		buttonSalir.addActionListener(this);
-		buttonSalir.setBounds(304, 367, 45, 51);
+		buttonSalir.setBounds(315, 367, 63, 72);
 		contentPane.add(buttonSalir);
-		buttonSalir.setIcon(new ImageIcon(img_salir));
+		buttonSalir.setIcon(new ImageIcon(img_logout));
 		
 		buttonRegresar = new JButton("");
+		buttonRegresar.setBackground(Color.WHITE);
+		buttonRegresar.setBorderPainted(false);
 		buttonRegresar.addActionListener(this);
-		buttonRegresar.setBounds(55, 367, 50, 51);
+		buttonRegresar.setBounds(10, 367, 69, 72);
 		contentPane.add(buttonRegresar);
-		buttonRegresar.setIcon(new ImageIcon(img_regresar));
+		buttonRegresar.setIcon(new ImageIcon(img_volver));
 		
 		labelError = new JLabel("");
 		labelError.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -237,7 +249,16 @@ public class FormLoginVotante extends JFrame implements MouseListener, FocusList
 	public void mouseReleased(MouseEvent arg0) {
 	}
 	protected void do_panel_3_mouseClicked(MouseEvent arg0) {
-		IniciarSesion();
+
+		if(intentos==2){
+			JOptionPane.showMessageDialog(this, "Acceso Denegado");
+			this.dispose();
+			
+		}
+		else{
+			IniciarSesion();
+			intentos=intentos+1;
+		};
 		
 	}
 	public void focusGained(FocusEvent e) {

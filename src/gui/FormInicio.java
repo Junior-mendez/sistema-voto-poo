@@ -29,10 +29,13 @@ import javax.swing.border.BevelBorder;
 public class FormInicio extends JFrame implements ActionListener, MouseListener {
 	
 	private Image img_votante= new ImageIcon(FormLogin.class.getResource("/resources/votante.jpg")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-	private Image img_usuario= new ImageIcon(FormLogin.class.getResource("/resources/username.png")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 	private Image img_salir= new ImageIcon(FormLogin.class.getResource("/resources/exit.png")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 	private Image img_voto_elec= new ImageIcon(FormLogin.class.getResource("/resources/voto_elec.png")).getImage().getScaledInstance(250, 100, Image.SCALE_SMOOTH);
-	private Image img_programador= new ImageIcon(FormLogin.class.getResource("/resources/programador.png")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	private Image img_programador1= new ImageIcon(FormLogin.class.getResource("/resources/programador1.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+	private Image img_usuario= new ImageIcon(FormLogin.class.getResource("/resources/votanteusu.png")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	private Image img_prohibido= new ImageIcon(FormLogin.class.getResource("/resources/prohibido.png")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	private Image img_logout= new ImageIcon(FormLogin.class.getResource("/resources/logout.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+	private Image img_votar= new ImageIcon(FormLogin.class.getResource("/resources/votar.png")).getImage().getScaledInstance(65, 65, Image.SCALE_SMOOTH);
 	
 	private JPanel contentPane;
 	private JPanel panel;
@@ -71,36 +74,37 @@ public class FormInicio extends JFrame implements ActionListener, MouseListener 
 	public FormInicio() {
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 450);
+		setBounds(100, 100, 391, 461);
 		contentPane = new JPanel();
+		contentPane.setBorder(new LineBorder(new Color(100, 149, 237), 2));
+		contentPane.setForeground(Color.WHITE);
 		contentPane.setIgnoreRepaint(true);
 		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new LineBorder(new Color(0, 0, 128), 2));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(128, 0, 0), 2, true));
-		panel.setBackground(new Color(102, 0, 0));
+		panel.setBackground(Color.WHITE);
 		panel.addMouseListener(this);
-		panel.setBounds(69, 131, 239, 74);
+		panel.setBounds(79, 307, 256, 79);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		
 		lblVotante = new JLabel("");
-		lblVotante.setBounds(181, 0, 68, 74);
+		lblVotante.setBounds(171, 0, 68, 74);
 		panel.add(lblVotante);
-		lblVotante.setIcon(new ImageIcon(img_votante));
+		lblVotante.setIcon(new ImageIcon(img_votar));
 		
 		lblVotante_1 = new JLabel("VOTO");
-		lblVotante_1.setForeground(new Color(255, 255, 255));
+		lblVotante_1.setForeground(new Color(0, 0, 0));
 		lblVotante_1.setBackground(new Color(0, 0, 128));
 		lblVotante_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblVotante_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVotante_1.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		lblVotante_1.setBounds(23, 11, 148, 41);
+		lblVotante_1.setFont(new Font("Arial Black", Font.PLAIN, 22));
+		lblVotante_1.setBounds(13, 22, 148, 32);
 		panel.add(lblVotante_1);
 		
 		panel_1 = new JPanel();
@@ -109,7 +113,7 @@ public class FormInicio extends JFrame implements ActionListener, MouseListener 
 		panel_1.addMouseListener(this);
 		panel_1.setBackground(new Color(128, 128, 128));
 		panel_1.setLayout(null);
-		panel_1.setBounds(69, 221, 239, 79);
+		panel_1.setBounds(79, 127, 256, 79);
 		contentPane.add(panel_1);
 		
 		lblUsuario = new JLabel("");
@@ -118,20 +122,15 @@ public class FormInicio extends JFrame implements ActionListener, MouseListener 
 		lblUsuario.setIcon(new ImageIcon(img_usuario));
 		
 		lblUsuario_1 = new JLabel("REGISTRO");
+		lblUsuario_1.setBounds(16, 27, 148, 23);
+		panel_1.add(lblUsuario_1);
 		lblUsuario_1.setForeground(new Color(255, 255, 255));
 		lblUsuario_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblUsuario_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuario_1.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		lblUsuario_1.setBounds(16, 11, 148, 41);
-		panel_1.add(lblUsuario_1);
-		btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(this);
-		btnSalir.setBounds(345, 388, 45, 51);
-		btnSalir.setIcon(new ImageIcon(img_salir));
-		contentPane.add(btnSalir);
 		
 		lblLogo = new JLabel("");
-		lblLogo.setBounds(48, 11, 277, 125);
+		lblLogo.setBounds(85, 6, 250, 110);
 		contentPane.add(lblLogo);
 		lblLogo.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -143,20 +142,20 @@ public class FormInicio extends JFrame implements ActionListener, MouseListener 
 		panel_2.setForeground(Color.WHITE);
 		panel_2.setBorder(new LineBorder(new Color(128, 128, 128), 2, true));
 		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(69, 311, 239, 79);
+		panel_2.setBounds(79, 217, 256, 79);
 		contentPane.add(panel_2);
 		
 		labelEncargado = new JLabel("");
 		labelEncargado.setBounds(174, 0, 65, 79);
 		panel_2.add(labelEncargado);
-		labelEncargado.setIcon(new ImageIcon(img_usuario));
+		labelEncargado.setIcon(new ImageIcon(img_prohibido));
 		
 		lblEncargado = new JLabel("ENCARGADO");
 		lblEncargado.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblEncargado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEncargado.setForeground(Color.WHITE);
 		lblEncargado.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		lblEncargado.setBounds(16, 11, 148, 41);
+		lblEncargado.setBounds(16, 24, 148, 29);
 		panel_2.add(lblEncargado);
 		
 		
@@ -165,10 +164,22 @@ public class FormInicio extends JFrame implements ActionListener, MouseListener 
 		panel_2.add(label_1);
 		
 		btnProgramador = new JButton("");
+		btnProgramador.setBorder(null);
+		btnProgramador.setBorderPainted(false);
+		btnProgramador.setBackground(Color.WHITE);
 		btnProgramador.addActionListener(this);
-		btnProgramador.setBounds(10, 391, 56, 48);
+		btnProgramador.setBounds(10, 396, 56, 59);
 		contentPane.add(btnProgramador);
-		btnProgramador.setIcon(new ImageIcon(img_programador));
+		btnProgramador.setIcon(new ImageIcon(img_programador1));
+		btnSalir = new JButton("Salir");
+		btnSalir.setBorderPainted(false);
+		btnSalir.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		btnSalir.setBounds(325, 392, 56, 63);
+		contentPane.add(btnSalir);
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setForeground(Color.WHITE);
+		btnSalir.addActionListener(this);
+		btnSalir.setIcon(new ImageIcon(img_logout));
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == btnProgramador) {

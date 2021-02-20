@@ -30,12 +30,12 @@ import javax.swing.JTextPane;
 
 public class FormProgramador extends JFrame implements ActionListener, MouseListener {
 	
-	private Image img_regresar= new ImageIcon(FormLogin.class.getResource("/resources/regresar.png")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	private Image img_volver= new ImageIcon(FormLogin.class.getResource("/resources/volver.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 	private Image img_junior= new ImageIcon(FormLogin.class.getResource("/resources/junior.jpg")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 	private Image img_luis= new ImageIcon(FormLogin.class.getResource("/resources/luis.jpeg")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 	private Image img_fabrizio= new ImageIcon(FormLogin.class.getResource("/resources/fabrizio.jpeg")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 	private Image img_walter= new ImageIcon(FormLogin.class.getResource("/resources/walter.jpeg")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-	private Image img_salir= new ImageIcon(FormLogin.class.getResource("/resources/exit.png")).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+	private Image img_logout= new ImageIcon(FormLogin.class.getResource("/resources/logout.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 	private Image img_upn= new ImageIcon(FormLogin.class.getResource("/resources/upn.png")).getImage().getScaledInstance(250, 100, Image.SCALE_SMOOTH);
 	private JPanel contentPane;
 	private JLabel lblJunior;
@@ -74,24 +74,26 @@ public class FormProgramador extends JFrame implements ActionListener, MouseList
 	 * Create the frame.
 	 */
 	public FormProgramador() {
-		setUndecorated(true);
+		setUndecorated(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 550);
+		setBounds(100, 100, 426, 612);
 		contentPane = new JPanel();
 		contentPane.setIgnoreRepaint(true);
-		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBackground(new Color(255, 215, 0));
 		contentPane.setBorder(new LineBorder(new Color(128, 128, 128), 2));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		btnSalir = new JButton("Salir");
+		btnSalir.setBorderPainted(false);
+		btnSalir.setBackground(new Color(255, 215, 0));
 		btnSalir.addActionListener(this);
-		btnSalir.setBounds(345, 488, 45, 51);
-		btnSalir.setIcon(new ImageIcon(img_salir));
+		btnSalir.setBounds(355, 498, 45, 51);
+		btnSalir.setIcon(new ImageIcon(img_logout));
 		contentPane.add(btnSalir);
 		
 		lblLogo = new JLabel("");
-		lblLogo.setBounds(57, 11, 277, 100);
+		lblLogo.setBounds(62, 11, 277, 100);
 		contentPane.add(lblLogo);
 		lblLogo.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -117,21 +119,17 @@ public class FormProgramador extends JFrame implements ActionListener, MouseList
 		textPaneLuis.setText("Luis Fernando Minaya S\u00E1enz\r\n990544224\r\nluisminayasaenz10@gmail.com");
 		
 		lblLuis = new JLabel("");
-		lblLuis.setBounds(260, 0, 68, 74);
+		lblLuis.setBounds(258, 0, 68, 74);
 		panel_2.add(lblLuis);
 		lblLuis.setIcon(new ImageIcon(img_luis));
 		
 		btnRegresar = new JButton("");
+		btnRegresar.setBorderPainted(false);
+		btnRegresar.setBackground(new Color(255, 215, 0));
 		btnRegresar.addActionListener(this);
-		btnRegresar.setBounds(10, 491, 56, 48);
+		btnRegresar.setBounds(10, 491, 70, 58);
 		contentPane.add(btnRegresar);
-		btnRegresar.setIcon(new ImageIcon(img_regresar));
-		
-		
-		lblJunior = new JLabel("");
-		lblJunior.setBounds(298, 148, 68, 74);
-		contentPane.add(lblJunior);
-		lblJunior.setIcon(new ImageIcon(img_junior));
+		btnRegresar.setIcon(new ImageIcon(img_volver));
 		
 		panel_3 = new JPanel();
 		panel_3.setLayout(null);
@@ -152,7 +150,7 @@ public class FormProgramador extends JFrame implements ActionListener, MouseList
 		panel_3.add(textPaneWalter);
 		
 		lblWalter = new JLabel("");
-		lblWalter.setBounds(261, 0, 68, 74);
+		lblWalter.setBounds(258, 0, 68, 74);
 		panel_3.add(lblWalter);
 		lblWalter.setIcon(new ImageIcon(img_walter));
 		
@@ -196,6 +194,12 @@ public class FormProgramador extends JFrame implements ActionListener, MouseList
 		textPaneJunior.setText("Junior Roland Mendez Lezcano\r\n986903103\r\nN00223764@upn.pe");
 		textPaneJunior.setBounds(10, 11, 229, 57);
 		panel_4.add(textPaneJunior);
+		
+		
+		lblJunior = new JLabel("");
+		lblJunior.setBounds(258, 0, 68, 74);
+		panel_4.add(lblJunior);
+		lblJunior.setIcon(new ImageIcon(img_junior));
 	}
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == btnRegresar) {

@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/resources/votar.png</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/votar.png</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -8,10 +8,10 @@ public class PartidoArray {
 	public PartidoArray() {
 		partidoA=new ArrayList<Partido>();
 		Adicionar(new Partido("Alianza Para el Progreso","APP","C://Users//Usuario//Pictures//Carpeta.jpg"));
-		Adicionar(new Partido("Partido Popular Cristiano","PPC","C://Users//Usuario//Pictures//navidad.jpg"));
-		Adicionar(new Partido("Partido n Cristiano","PPC","C://Users//Usuario//Pictures//Carpeta.jpg"));
-		Adicionar(new Partido("Partido o Cristiano","PPC","C://Users//Usuario//Pictures//navidad.jpg"));
-		Adicionar(new Partido("Partido p Cristiano","PPC","C://Users//Usuario//Pictures//Carpeta.jpg"));
+		Adicionar(new Partido("Partido Popular Cristiano","BBB","C://Users//Usuario//Pictures//navidad.jpg"));
+		Adicionar(new Partido("Partido n Cristiano","CCC","C://Users//Usuario//Pictures//Carpeta.jpg"));
+		Adicionar(new Partido("Partido o Cristiano","DDD","C://Users//Usuario//Pictures//navidad.jpg"));
+		Adicionar(new Partido("Partido p Cristiano","EEE","C://Users//Usuario//Pictures//Carpeta.jpg"));
 		
 	}
 	

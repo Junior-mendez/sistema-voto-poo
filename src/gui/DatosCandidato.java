@@ -27,6 +27,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -41,8 +42,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
-public class DatosCandidato extends JFrame implements ActionListener, MouseListener{
+
+
+public class DatosCandidato extends JFrame implements ActionListener, MouseListener, KeyListener{
+	int id;
 	private Image img_buscar= new ImageIcon(FormLogin.class.getResource("/resources/buscar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	private Image img_registrar= new ImageIcon(FormLogin.class.getResource("/resources/registrar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	private Image img_borrar= new ImageIcon(FormLogin.class.getResource("/resources/borrar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -136,31 +142,38 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 		contentPane.add(lblSexo);
 		
 		txtCodCandidato = new JTextField();
+		txtCodCandidato.addKeyListener(this);
 		txtCodCandidato.setColumns(10);
 		txtCodCandidato.setBounds(120, 13, 159, 22);
 		contentPane.add(txtCodCandidato);
 		
 		txtDNICandidato = new JTextField();
+		txtDNICandidato.addKeyListener(this);
 		txtDNICandidato.setColumns(10);
 		txtDNICandidato.setBounds(120, 51, 159, 22);
 		contentPane.add(txtDNICandidato);
 		
 		txtNomCandidato = new JTextField();
+		txtNomCandidato.addKeyListener(this);
 		txtNomCandidato.setColumns(10);
 		txtNomCandidato.setBounds(120, 88, 159, 22);
 		contentPane.add(txtNomCandidato);
 		
 		txtApeCandidato = new JTextField();
+		txtApeCandidato.addKeyListener(this);
 		txtApeCandidato.setColumns(10);
 		txtApeCandidato.setBounds(120, 126, 159, 22);
 		contentPane.add(txtApeCandidato);
 		
 		txtEdadCandidato = new JTextField();
+		txtEdadCandidato.addKeyListener(this);
 		txtEdadCandidato.setColumns(10);
 		txtEdadCandidato.setBounds(120, 164, 159, 22);
 		contentPane.add(txtEdadCandidato);
 		
 		btnRegistrarDatos = new JButton("REGISTRAR");
+		btnRegistrarDatos.addKeyListener(this);
+		btnRegistrarDatos.setEnabled(false);
 		btnRegistrarDatos.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnRegistrarDatos.addActionListener(this);
 		btnRegistrarDatos.setBounds(12, 314, 135, 42);
@@ -190,6 +203,8 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 		table.setModel(modelo);
 		
 		btnModificar = new JButton("MODIFICAR");
+		btnModificar.addKeyListener(this);
+		btnModificar.setEnabled(false);
 		btnModificar.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnModificar.addActionListener(this);
 		btnModificar.setBounds(12, 378, 135, 42);
@@ -197,6 +212,8 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 		btnModificar.setIcon(new ImageIcon(img_editar));
 		
 		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addKeyListener(this);
+		btnEliminar.setEnabled(false);
 		btnEliminar.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnEliminar.addActionListener(this);
 		btnEliminar.setBounds(157, 378, 136, 42);
@@ -204,6 +221,8 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 		btnEliminar.setIcon(new ImageIcon(img_borrar));
 		
 		btnB = new JButton("BUSCAR");
+		btnB.addKeyListener(this);
+		btnB.setEnabled(false);
 		btnB.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnB.addActionListener(this);
 		btnB.setBounds(157, 314, 136, 42);
@@ -295,6 +314,28 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 	
 	protected void do_btnRegistrarDatos_actionPerformed(ActionEvent arg0) {
 		Registrar();
+	}
+	public void HabilitarBoton(){
+		if(!txtCodCandidato.getText().isEmpty() && 
+				!txtDNICandidato.getText().isEmpty() && 
+				!txtNomCandidato.getText().isEmpty() &&
+				!txtApeCandidato.getText().isEmpty() && 
+				!txtEdadCandidato.getText().isEmpty()) {
+			btnRegistrarDatos.setEnabled(true);
+			
+		}else{
+			btnRegistrarDatos.setEnabled(false);
+		}
+		if(!txtCodCandidato.getText().isEmpty()){
+			btnB.setEnabled(true);
+
+		}else{
+			btnB.setEnabled(false);
+			btnEliminar.setEnabled(false);
+			btnModificar.setEnabled(false);
+			
+		}
+		
 	}
 	public void Registrar(){
 		
@@ -437,6 +478,8 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 			if(c!=	null){
 				ListadoBuscar(c);
 				mensaje("USUARIO ENCONTRADO");
+				btnEliminar.setEnabled(true);
+				btnModificar.setEnabled(true);
 			}
 			else{
 				mensaje("El codigo "+ObtenerDNI()+" no existe");
@@ -531,11 +574,12 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 				ImageIcon icon=new ImageIcon(archivo.toString());
 				Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
 				lblFoto.setIcon(icono);
-				 des = System.getProperty("user.dir")+"/src/resources/"+archivo.getName();
+				int cod=id+1;
+				 des = System.getProperty("user.dir")+"/src/resources/"+cod+archivo.getName();
 				Path destino = Paths.get(des);
 				String orig = archivo.getPath();
 				Path origen = Paths.get(orig);
-				Files.copy(origen, destino);
+				Files.copy(origen, destino,StandardCopyOption.REPLACE_EXISTING);
 				mensaje("Foto cargada");
 			}
 			catch(Exception d){
@@ -575,5 +619,65 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 	}
 	protected void do_comboPartido_mouseClicked(MouseEvent e) {
 		 AgregarCombo(comboPartido);
+	}
+	public void keyPressed(KeyEvent arg0) {
+	}
+	public void keyReleased(KeyEvent arg0) {
+		if (arg0.getSource() == txtEdadCandidato) {
+			do_txtEdadCandidato_keyReleased(arg0);
+		}
+		if (arg0.getSource() == txtApeCandidato) {
+			do_txtApeCandidato_keyReleased(arg0);
+		}
+		if (arg0.getSource() == txtNomCandidato) {
+			do_txtNomCandidato_keyReleased(arg0);
+		}
+		if (arg0.getSource() == txtDNICandidato) {
+			do_txtDNICandidato_keyReleased(arg0);
+		}
+		if (arg0.getSource() == txtCodCandidato) {
+			do_txtCodCandidato_keyReleased(arg0);
+		}
+		if (arg0.getSource() == btnEliminar) {
+			do_btnEliminar_keyReleased(arg0);
+		}
+		if (arg0.getSource() == btnB) {
+			do_btnB_keyReleased(arg0);
+		}
+		if (arg0.getSource() == btnModificar) {
+			do_btnModificar_keyReleased(arg0);
+		}
+		if (arg0.getSource() == btnRegistrarDatos) {
+			do_btnRegistrarDatos_keyReleased(arg0);
+		}
+	}
+	public void keyTyped(KeyEvent arg0) {
+	}
+	protected void do_btnRegistrarDatos_keyReleased(KeyEvent arg0) {
+
+	}
+	protected void do_btnModificar_keyReleased(KeyEvent arg0) {
+
+	}
+	protected void do_btnB_keyReleased(KeyEvent arg0) {
+
+	}
+	protected void do_btnEliminar_keyReleased(KeyEvent arg0) {
+
+	}
+	protected void do_txtCodCandidato_keyReleased(KeyEvent arg0) {
+		HabilitarBoton();
+	}
+	protected void do_txtDNICandidato_keyReleased(KeyEvent arg0) {
+		HabilitarBoton();
+	}
+	protected void do_txtNomCandidato_keyReleased(KeyEvent arg0) {
+		HabilitarBoton();
+	}
+	protected void do_txtApeCandidato_keyReleased(KeyEvent arg0) {
+		HabilitarBoton();
+	}
+	protected void do_txtEdadCandidato_keyReleased(KeyEvent arg0) {
+		HabilitarBoton();
 	}
 }

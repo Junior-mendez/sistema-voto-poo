@@ -9,7 +9,6 @@ public class Encargado extends Persona{
 	public Encargado(int dni, String nombre, String apellido, int edad, String sexo,
 			 String usuario_encargado, String clave_encargado) {
 		super(dni, nombre, apellido, edad, sexo);
-	
 		this.usuario_encargado = usuario_encargado;
 		this.clave_encargado = clave_encargado;
 	}

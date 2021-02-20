@@ -36,7 +36,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class FormLogin extends JFrame implements MouseListener, FocusListener, ActionListener {
-
+	int intentos;
 	private Image img_logo= new ImageIcon(FormLogin.class.getResource("/resources/fondo.jpg")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 	private Image img_username= new ImageIcon(FormLogin.class.getResource("/resources/username.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	private Image img_password= new ImageIcon(FormLogin.class.getResource("/resources/password.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -158,7 +158,15 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 		        }
 		        public void keyPressed(KeyEvent e) {
 		            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-		                IniciarSesion(); //MÃ©todo que tienes que crearte
+		            	if(intentos==2){
+		        			
+		            		JOptionPane.showMessageDialog(FormLogin.this, "Acceso Denegado");
+		            		FormLogin.this.dispose();
+		        		}
+		        		else{
+		        			IniciarSesion();
+		        			intentos=intentos+1;
+		        		}; 
 		            }
 		        }
 		        public void keyReleased(KeyEvent e) {
@@ -234,8 +242,18 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 	}
 	public void mouseReleased(MouseEvent arg0) {
 	}
+	
 	protected void do_panel_3_mouseClicked(MouseEvent arg0) {
-		IniciarSesion();
+
+		if(intentos==3){
+			JOptionPane.showMessageDialog(this, "Acceso Denegado");
+			this.dispose();
+			
+		}
+		else{
+			IniciarSesion();
+			intentos=intentos+1;
+		};
 		
 	}
 	public void focusGained(FocusEvent e) {
@@ -291,7 +309,7 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 		}
 	}
 	protected void do_button_actionPerformed(ActionEvent arg0) {
-		if (JOptionPane.showConfirmDialog(null, "Deseas Salir de la AplicaciÃ³n?","Confirmar",JOptionPane.YES_NO_OPTION)==0){
+		if (JOptionPane.showConfirmDialog(null, "Deseas Salir de la Aplicación?","Confirmar",JOptionPane.YES_NO_OPTION)==0){
 			FormLogin.this.dispose();
 		}
 	}
@@ -302,9 +320,10 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 	}
 	public void IniciarSesion(){
 		EncargadoArray encargados = new EncargadoArray();
+		
 		if  (textUsername.getText().equals("") || textUsername.getText().equals("Username")||
 				textPassword.getText().equals("")||textPassword.getText().equals("Password")){
-			labelError.setText("Ingrese el usuario y contraseÃ±a");
+			labelError.setText("Ingrese el usuario y contraseña");
 		}
 		else{
 			try{
@@ -318,7 +337,8 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 							this.setVisible(false);
 						}
 						else{
-							labelError.setText("ContraseÃ±a Incorrecta");
+							labelError.setText("Contraseña Incorrecta");
+			
 						}
 					}
 					

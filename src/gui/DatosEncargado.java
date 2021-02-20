@@ -23,14 +23,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
-public class DatosEncargado extends JFrame implements ActionListener {
+public class DatosEncargado extends JFrame implements ActionListener, KeyListener {
+	private Image img_buscar= new ImageIcon(FormLogin.class.getResource("/resources/buscar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	private Image img_registrar= new ImageIcon(FormLogin.class.getResource("/resources/registrar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	private Image img_borrar= new ImageIcon(FormLogin.class.getResource("/resources/borrar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	private Image img_editar= new ImageIcon(FormLogin.class.getResource("/resources/editar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	private Image img_menu= new ImageIcon(FormLogin.class.getResource("/resources/menu.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
 	private JPanel contentPane;
 	private JLabel lblDni;
@@ -122,64 +133,79 @@ public class DatosEncargado extends JFrame implements ActionListener {
 		contentPane.add(lblClave);
 		
 		txtDNIEncargado = new JTextArea();
+		txtDNIEncargado.addKeyListener(this);
 		txtDNIEncargado.setBounds(131, 14, 141, 24);
 		contentPane.add(txtDNIEncargado);
 		
 		txtNomEncargado = new JTextArea();
+		txtNomEncargado.addKeyListener(this);
 		txtNomEncargado.setBounds(131, 52, 141, 24);
 		contentPane.add(txtNomEncargado);
 		
 		txtApeEncargado = new JTextArea();
+		txtApeEncargado.addKeyListener(this);
 		txtApeEncargado.setBounds(131, 90, 141, 24);
 		contentPane.add(txtApeEncargado);
 		
 		txtEdadEncargado = new JTextArea();
+		txtEdadEncargado.addKeyListener(this);
 		txtEdadEncargado.setBounds(131, 128, 141, 24);
 		contentPane.add(txtEdadEncargado);
 		
 		txtUsuarioEncargado = new JTextArea();
-		txtUsuarioEncargado.setBounds(127, 204, 145, 24);
+		txtUsuarioEncargado.addKeyListener(this);
+		txtUsuarioEncargado.setBounds(131, 204, 145, 24);
 		contentPane.add(txtUsuarioEncargado);
 		
 		txtClaveEncargado = new JTextArea();
-		txtClaveEncargado.setBounds(127, 242, 145, 24);
+		txtClaveEncargado.addKeyListener(this);
+		txtClaveEncargado.setBounds(131, 242, 145, 24);
 		contentPane.add(txtClaveEncargado);
 		
 		comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 13));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"-SELECCIONAR-", "MASCULINO", "FEMENINO", "OTRO"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"MASCULINO", "FEMENINO", "OTRO"}));
 		comboBox.setBounds(131, 166, 141, 25);
 		contentPane.add(comboBox);
 		
 		btnRegistrarDatos = new JButton("REGISTRAR");
+		btnRegistrarDatos.setEnabled(false);
 		btnRegistrarDatos.addActionListener(this);
 		btnRegistrarDatos.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnRegistrarDatos.setBounds(12, 312, 135, 42);
 		contentPane.add(btnRegistrarDatos);
+		btnRegistrarDatos.setIcon(new ImageIcon(img_registrar));
 		
 		btnB = new JButton("BUSCAR");
+		btnB.setEnabled(false);
 		btnB.addActionListener(this);
 		btnB.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnB.setBounds(173, 312, 136, 42);
 		contentPane.add(btnB);
+		btnB.setIcon(new ImageIcon(img_buscar));
 		
 		btnModificar = new JButton("MODIFICAR");
+		btnModificar.setEnabled(false);
 		btnModificar.addActionListener(this);
 		btnModificar.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnModificar.setBounds(12, 370, 135, 42);
 		contentPane.add(btnModificar);
+		btnModificar.setIcon(new ImageIcon(img_editar));
 		
 		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setEnabled(false);
 		btnEliminar.addActionListener(this);
 		btnEliminar.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnEliminar.setBounds(173, 370, 136, 42);
 		contentPane.add(btnEliminar);
+		btnEliminar.setIcon(new ImageIcon(img_borrar));
 		
 		btnMenu = new JButton("MENU");
 		btnMenu.addActionListener(this);
 		btnMenu.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		btnMenu.setBounds(12, 433, 98, 42);
 		contentPane.add(btnMenu);
+		btnMenu.setIcon(new ImageIcon(img_menu));
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(346, 26, 547, 446);
@@ -302,17 +328,112 @@ public class DatosEncargado extends JFrame implements ActionListener {
 			
 		}
 	}
+	
+	void ListadoBuscar(Encargado b){
+		modelo.setRowCount(0);
+
+			Object[] registro={b.getDni(),b.getNombre(),b.getApellido(),b.getUsuario_encargado()};	
+			modelo.addRow(registro);
+		
+
+		}
+	
 	protected void do_btnB_actionPerformed(ActionEvent e) {
-		
+		Buscar();
 	}
+	public void Buscar(){
+		try{
+			Encargado enc=Data.create().encargadoA.buscar(ObtenerDNI());
+			if(enc!=null){
+				ListadoBuscar(enc);
+				mensaje("USUARIO ENCONTRADO");
+				btnModificar.setEnabled(true);
+				btnEliminar.setEnabled(true);
+			}
+			else{
+				mensaje("El DNI "+ObtenerDNI()+" no existe");
+				Limpiar();
+			}
+		}
+		catch(Exception e){
+			mensaje("Ingrese DNI correcto");
+			txtDNIEncargado.setText("");
+			txtDNIEncargado.grabFocus();
+		}
+	}
+	
 	protected void do_btnModificar_actionPerformed(ActionEvent e) {
-		
+		Editar();
+	}
+	public void Editar(){
+		try{
+			Encargado enc=Data.create().encargadoA.buscar(ObtenerDNI());
+			
+			String nombre=ObtenerNombre();
+			String apelli=ObtenerApellido();
+			int edad=ObtenerEdad();
+			String usu=ObtenerUsuario();
+			String clav=ObtenerClave();
+			
+			if(enc!=null){
+				enc.setNombre(nombre);
+				enc.setApellido(apelli);
+				enc.setEdad(edad);;
+				enc.setUsuario_encargado(usu);;
+				enc.setClave_encargado(clav);;
+				mensaje("DATOS  MODIFICADOS");
+				Listado();
+				Limpiar();
+			}
+			else{
+				mensaje("El DNI "+ObtenerDNI()+" no existe");
+				Limpiar();
+			}
+		}
+		catch(Exception e){
+			mensaje("Ingrese todos los campos");
+			txtNomEncargado.grabFocus();
+		}
 	}
 	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
-		
+		Eliminar();
+	}
+	public void Eliminar(){
+		try{
+			Encargado enc=Data.create().encargadoA.buscar(ObtenerDNI());
+			
+			if(enc!=null){
+				Data.create().encargadoA.eliminar(enc);
+				Listado();
+				Limpiar();
+				mensaje("USUARIO ELIMINADO");
+				txtDNIEncargado.grabFocus();
+			}
+			else{
+				mensaje("El DNI "+ObtenerDNI()+" no existe");
+				Limpiar();
+			}
+		}
+		catch(Exception e){
+			mensaje("Ingrese DNI correcto");
+			txtDNIEncargado.setText("");
+			txtDNIEncargado.grabFocus();
+		}
+	}
+	public void mouseClicked(MouseEvent arg0) {
+	}
+	public void mouseEntered(MouseEvent arg0) {
+	}
+	public void mouseExited(MouseEvent arg0) {
+	}
+	public void mousePressed(MouseEvent arg0) {
+	}
+	public void mouseReleased(MouseEvent arg0) {
 	}
 	protected void do_btnMenu_actionPerformed(ActionEvent e) {
-		
+		dispose();
+		Principal principal = new Principal();
+		principal.setVisible(true);
 	}
 	
 	void Limpiar(){
@@ -357,5 +478,70 @@ public class DatosEncargado extends JFrame implements ActionListener {
 	}
 	String ObtenerClave(){
 		return txtClaveEncargado.getText();
+	}
+	public void keyPressed(KeyEvent e) {
+	}
+	public void keyReleased(KeyEvent e) {
+		if (e.getSource() == txtClaveEncargado) {
+			do_txtClaveEncargado_keyReleased(e);
+		}
+		if (e.getSource() == txtUsuarioEncargado) {
+			do_txtUsuarioEncargado_keyReleased(e);
+		}
+		if (e.getSource() == txtEdadEncargado) {
+			do_txtEdadEncargado_keyReleased(e);
+		}
+		if (e.getSource() == txtApeEncargado) {
+			do_txtApeEncargado_keyReleased(e);
+		}
+		if (e.getSource() == txtNomEncargado) {
+			do_txtNomEncargado_keyReleased(e);
+		}
+		if (e.getSource() == txtDNIEncargado) {
+			do_txtDNIEncargado_keyReleased(e);
+		}
+	}
+	public void keyTyped(KeyEvent e) {
+	}
+	public void HabilitarBoton(){
+		if(!txtDNIEncargado.getText().isEmpty() && 
+				!txtNomEncargado.getText().isEmpty() && 
+				!txtApeEncargado.getText().isEmpty() &&
+				!txtEdadEncargado.getText().isEmpty() && 
+				!txtUsuarioEncargado.getText().isEmpty() &&
+				!txtClaveEncargado.getText().isEmpty())  {
+			btnRegistrarDatos.setEnabled(true);
+			
+		}else{
+			btnRegistrarDatos.setEnabled(false);
+		}
+		if(!txtDNIEncargado.getText().isEmpty()){
+			btnB.setEnabled(true);
+
+		}else{
+			btnB.setEnabled(false);
+			btnEliminar.setEnabled(false);
+			btnModificar.setEnabled(false);
+			
+		}
+		
+	}
+	protected void do_txtDNIEncargado_keyReleased(KeyEvent e) {
+		HabilitarBoton();
+	}
+	protected void do_txtNomEncargado_keyReleased(KeyEvent e) {
+		HabilitarBoton();
+	}
+	protected void do_txtApeEncargado_keyReleased(KeyEvent e) {
+		HabilitarBoton();
+	}
+	protected void do_txtEdadEncargado_keyReleased(KeyEvent e) {
+		HabilitarBoton();
+	}
+	protected void do_txtUsuarioEncargado_keyReleased(KeyEvent e) {
+		HabilitarBoton();
+	}
+	protected void do_txtClaveEncargado_keyReleased(KeyEvent e) {
+		HabilitarBoton();
 	}
 }
