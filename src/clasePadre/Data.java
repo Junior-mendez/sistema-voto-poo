@@ -15,6 +15,7 @@ public class Data {
 	public static VotoArray votoA=new VotoArray();
 	public static Data data;
 	public static String certi;
+	public static boolean inicio;
 	
 	public static Data create(){
 		if(data == null){

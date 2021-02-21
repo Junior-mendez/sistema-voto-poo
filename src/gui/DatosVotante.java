@@ -555,9 +555,16 @@ public class DatosVotante extends JFrame implements ActionListener, MouseListene
 	public void mouseReleased(MouseEvent arg0) {
 	}
 	protected void do_btnMenu_actionPerformed(ActionEvent arg0) {
-		dispose();
-		Principal principal = new Principal();
-		principal.setVisible(true);
+		if (!Data.inicio){
+			dispose();
+			Principal principal = new Principal();
+			principal.setVisible(true);
+		}
+		else{
+			dispose();
+			FormInicio forminicio = new FormInicio();
+			forminicio.setVisible(true);
+		}
 	}
 	public void keyPressed(KeyEvent arg0) {
 	}

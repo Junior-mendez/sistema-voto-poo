@@ -23,6 +23,9 @@ import java.awt.Label;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import clasePadre.Data;
+
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
 
@@ -212,6 +215,7 @@ public class FormInicio extends JFrame implements ActionListener, MouseListener 
 		DatosVotante datosVotante = new DatosVotante();
 		datosVotante.setVisible(true);
 		this.setVisible(false);
+		Data.inicio=true;
 	}
 	protected void do_panel_mouseClicked(MouseEvent arg0) {
 		FormLoginVotante voto = new FormLoginVotante();

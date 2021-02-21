@@ -22,6 +22,8 @@ import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
+import clasePadre.Data;
+
 public class Principal extends JFrame implements ActionListener {
 	
 	private Image img_voto_elec= new ImageIcon(FormLogin.class.getResource("/resources/voto_elec.png")).getImage().getScaledInstance(250, 100, Image.SCALE_SMOOTH);
@@ -31,6 +33,7 @@ public class Principal extends JFrame implements ActionListener {
 	private Image img_candidato= new ImageIcon(FormLogin.class.getResource("/resources/candidato.png")).getImage().getScaledInstance(70, 54, Image.SCALE_SMOOTH);
 	private Image img_encargado= new ImageIcon(FormLogin.class.getResource("/resources/username.png")).getImage().getScaledInstance(70, 54, Image.SCALE_SMOOTH);
 	private Image img_votante= new ImageIcon(FormLogin.class.getResource("/resources/votante.png")).getImage().getScaledInstance(70, 54, Image.SCALE_SMOOTH);
+	private Image img_reporte= new ImageIcon(FormLogin.class.getResource("/resources/reporte.png")).getImage().getScaledInstance(70, 54, Image.SCALE_SMOOTH);
 	
 	private JPanel contentPane;
 	private JButton btnCrearEncargado;
@@ -40,6 +43,7 @@ public class Principal extends JFrame implements ActionListener {
 	private JButton btnSalir;
 	private JButton btnInicio;
 	private JButton btnCrearPartido;
+	private JButton btnReporte;
 
 	/**
 	 * Launch the application.
@@ -64,7 +68,7 @@ public class Principal extends JFrame implements ActionListener {
 		setBackground(new Color(255, 255, 255));
 		setTitle("SISTEMA DE VOTO ELECTRONICO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 450);
+		setBounds(100, 100, 399, 528);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -112,14 +116,14 @@ public class Principal extends JFrame implements ActionListener {
 		btnSalir = new JButton("");
 		btnSalir.setBackground(new Color(255, 255, 255));
 		btnSalir.addActionListener(this);
-		btnSalir.setBounds(318, 356, 40, 44);
+		btnSalir.setBounds(333, 434, 40, 44);
 		contentPane.add(btnSalir);
 		btnSalir.setIcon(new ImageIcon(img_salir));
 		
 		btnInicio = new JButton("");
 		btnInicio.setBackground(new Color(255, 255, 255));
 		btnInicio.addActionListener(this);
-		btnInicio.setBounds(10, 356, 63, 44);
+		btnInicio.setBounds(10, 434, 63, 44);
 		contentPane.add(btnInicio);
 		btnInicio.setIcon(new ImageIcon(img_inicio));
 		
@@ -131,9 +135,21 @@ public class Principal extends JFrame implements ActionListener {
 		btnCrearPartido.setBounds(78, 113, 218, 54);
 		contentPane.add(btnCrearPartido);
 		btnCrearPartido.setIcon(new ImageIcon(img_partido));
+		
+		btnReporte = new JButton("REPORTE");
+		btnReporte.addActionListener(this);
+		btnReporte.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		btnReporte.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		btnReporte.setBackground(Color.WHITE);
+		btnReporte.setBounds(78, 373, 218, 54);
+		contentPane.add(btnReporte);
+		btnReporte.setIcon(new ImageIcon(img_reporte));
 
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnReporte) {
+			do_btnReporte_actionPerformed(e);
+		}
 		if (e.getSource() == btnCrearPartido) {
 			do_btnCrearPartido_actionPerformed(e);
 		}
@@ -162,6 +178,7 @@ public class Principal extends JFrame implements ActionListener {
 		DatosVotante votante=new DatosVotante();
 		votante.setVisible(true);
 		this.setVisible(false);
+		Data.inicio=false;
 	}
 	protected void do_btnCrearCandidato_actionPerformed(ActionEvent e) {
 		DatosCandidato candidato=new DatosCandidato();
@@ -182,5 +199,10 @@ public class Principal extends JFrame implements ActionListener {
 		DatosPartido partido=new DatosPartido();
 		partido.setVisible(true);
 		this.setVisible(false);
+	}
+	protected void do_btnReporte_actionPerformed(ActionEvent e) {
+		this.dispose();
+		FormReporteVoto reporte = new FormReporteVoto();
+		reporte.setVisible(true);
 	}
 }
