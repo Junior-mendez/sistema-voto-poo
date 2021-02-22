@@ -7,8 +7,8 @@ public class PartidoArray {
 	
 	public PartidoArray() {
 		partidoA=new ArrayList<Partido>();
-		Adicionar(new Partido("Partido Aprista Peruano","APRA","C://Users//Junior Mendez//Pictures//proyecto//apra.png"));
-		Adicionar(new Partido("Accion Popular","AP","C://Users//Junior Mendez//Pictures//proyecto//accion.png"));
+		Adicionar(new Partido("Partido Aprista Peruano","APRA",System.getProperty("user.dir")+"/src/resources/"+"apra.png"));
+		Adicionar(new Partido("Accion Popular","AP",System.getProperty("user.dir")+"/src/resources/"+"accion.png"));
 		
 	}
 	
