@@ -574,8 +574,7 @@ public class DatosCandidato extends JFrame implements ActionListener, MouseListe
 				ImageIcon icon=new ImageIcon(archivo.toString());
 				Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
 				lblFoto.setIcon(icono);
-				int cod=id+1;
-				 des = System.getProperty("user.dir")+"/src/resources/"+cod+archivo.getName();
+				 des = System.getProperty("user.dir")+"/src/resources/"+archivo.getName();
 				Path destino = Paths.get(des);
 				String orig = archivo.getPath();
 				Path origen = Paths.get(orig);

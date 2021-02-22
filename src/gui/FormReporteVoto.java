@@ -74,7 +74,7 @@ public class FormReporteVoto extends JFrame implements ActionListener {
 		tablaModelo =new DefaultTableModel(){
 		    public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
 		};
-		tablaModelo.addColumn("PORCENTAJE DE VOTOS");
+		tablaModelo.addColumn("CANTIDAD DE VOTOS");
 		tablaModelo.addColumn("PARTIDO");
 		tablaModelo.addColumn("CANDIDATO");
 

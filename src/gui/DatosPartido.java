@@ -28,6 +28,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Image;
@@ -317,7 +318,7 @@ public class DatosPartido extends JFrame implements ActionListener {
 				Path destino = Paths.get(des);
 				String orig = archivo.getPath();
 				Path origen = Paths.get(orig);
-				Files.copy(origen, destino);
+				Files.copy(origen, destino,StandardCopyOption.REPLACE_EXISTING);
 				mensaje("Foto cargada");
 				return des;
 				

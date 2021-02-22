@@ -8,7 +8,7 @@ public class EncargadoArray {
 
 	public EncargadoArray() {
 		encargadoA=new ArrayList<Encargado>();
-		Adicionar(new Encargado(76515667,  "Junior", "Junior", 20,  "M","jota","jota"));
+		Adicionar(new Encargado(76515667,  "Junior", "Mendez", 20,  "M","junior","junior"));
 	}
 
 	public void Adicionar(Encargado x){

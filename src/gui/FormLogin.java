@@ -23,6 +23,7 @@ import javax.swing.border.LineBorder;
 import claseHijos.Encargado;
 import claseHijos.EncargadoArray;
 import claseHijos.VotanteArray;
+import clasePadre.Data;
 
 import java.awt.Color;
 import javax.swing.JPasswordField;
@@ -36,7 +37,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class FormLogin extends JFrame implements MouseListener, FocusListener, ActionListener {
-	int intentos;
+	int intentos=0;
 	private Image img_logo= new ImageIcon(FormLogin.class.getResource("/resources/fondo.jpg")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 	private Image img_username= new ImageIcon(FormLogin.class.getResource("/resources/username.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 	private Image img_password= new ImageIcon(FormLogin.class.getResource("/resources/password.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -245,7 +246,7 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 	
 	protected void do_panel_3_mouseClicked(MouseEvent arg0) {
 
-		if(intentos==3){
+		if(intentos==2){
 			JOptionPane.showMessageDialog(this, "Acceso Denegado");
 			this.dispose();
 			
@@ -319,7 +320,6 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 		this.setVisible(false);
 	}
 	public void IniciarSesion(){
-		EncargadoArray encargados = new EncargadoArray();
 		
 		if  (textUsername.getText().equals("") || textUsername.getText().equals("Username")||
 				textPassword.getText().equals("")||textPassword.getText().equals("Password")){
@@ -327,7 +327,7 @@ public class FormLogin extends JFrame implements MouseListener, FocusListener, A
 		}
 		else{
 			try{
-				Encargado encargado = encargados.buscar(textUsername.getText());
+				Encargado encargado = Data.create().encargadoA.buscar(textUsername.getText());
 				String username = encargado.getUsuario_encargado();
 				String password = encargado.getClave_encargado();
 					
